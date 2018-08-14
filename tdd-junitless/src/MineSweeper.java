@@ -9,25 +9,42 @@ public class MineSweeper {
     public static String[][] generatePlayMap(String[][] mineMap) {
         String[][] map = mineMap;
 
+        final int MAP_HEIGHT = map.length;
         final int MAP_WIDTH = map[0].length;
 
-        for (int xOrdinate = 0; xOrdinate < MAP_WIDTH; xOrdinate++) {
-            String curentCell = map[0][xOrdinate];
+        for (int yOrdinate = 0; yOrdinate < MAP_HEIGHT; yOrdinate++) {
+            for (int xOrdinate = 0; xOrdinate < MAP_WIDTH; xOrdinate++) {
+                String curentCell = mineMap[yOrdinate][xOrdinate];
 
-            if (curentCell.equals("*")) {
-                map[0][xOrdinate] = "*";
-            } else {
-                int minesAround = 0;
+                if (curentCell.equals("*")) {
+                    map[yOrdinate][xOrdinate] = "*";
+                } else {
+                    final int[][] NEIGHBOURS_ORDINATE = {
+                            {yOrdinate - 1, xOrdinate - 1}, {yOrdinate - 1, xOrdinate}, {yOrdinate - 1, xOrdinate + 1},
+                            {yOrdinate, xOrdinate - 1}, {yOrdinate, xOrdinate + 1},
+                            {yOrdinate + 1, xOrdinate - 1}, {yOrdinate + 1, xOrdinate}, {yOrdinate + 1, xOrdinate + 1},
+                    };
 
-                boolean hasNeighbourAtLeft = xOrdinate - 1 >= 0;
-                boolean hasMineAtLeft = hasNeighbourAtLeft && map[0][xOrdinate - 1].equals("*");
-                if (hasMineAtLeft) minesAround++;
 
-                boolean hasNeighbourAtRight = xOrdinate + 1 < MAP_WIDTH;
-                boolean hasMineAtRight = hasNeighbourAtRight && map[0][xOrdinate + 1].equals("*");
-                if (hasMineAtRight) minesAround++;
+                    int minesAround = 0;
+                    for (int i = 0; i < NEIGHBOURS_ORDINATE.length; i++) {
 
-                map[0][xOrdinate] = String.valueOf(minesAround);
+                        int[] neighbourOrdinate = NEIGHBOURS_ORDINATE[i];
+                        int xOrdinateOfNeighbour = neighbourOrdinate[1];
+                        int yOrdinateOfNeighbour = neighbourOrdinate[0];
+
+                        boolean isOutOfMapNeighbour = xOrdinateOfNeighbour < 0
+                                || xOrdinateOfNeighbour == MAP_WIDTH
+                                || yOrdinateOfNeighbour < 0
+                                || yOrdinateOfNeighbour == MAP_HEIGHT;
+                        if (isOutOfMapNeighbour) continue;
+
+                        boolean isMineOwnerNeighbour = mineMap[yOrdinateOfNeighbour][xOrdinateOfNeighbour].equals("*");
+                        if (isMineOwnerNeighbour) minesAround++;
+                    }
+
+                    map[yOrdinate][xOrdinate] = String.valueOf(minesAround);
+                }
             }
         }
 
