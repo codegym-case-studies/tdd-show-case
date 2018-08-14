@@ -2,8 +2,8 @@ public class MineSweeper {
     public static void main(String[] args) {
         testThatApplicationCanResolveASimpleMineMap();
         testThatApplicationCanResolveAMineMapWithTwoColumn();
+        testThatApplicationCanResolveAMineMapWithThreeColumn();
     }
-
 
     public static String[][] generatePlayMap(String[][] mineMap) {
         String[][] map = mineMap;
@@ -33,8 +33,23 @@ public class MineSweeper {
         };
         String[][] actual = generatePlayMap(simpleMineMap);
 
-        assertArrayEquals(expected, actual, "Can generate a simple map");
+        assertArrayEquals(expected, actual, "Can generate a map with two column");
     }
+
+
+    private static void testThatApplicationCanResolveAMineMapWithThreeColumn() {
+        String[][] simpleMineMap = {
+                {"*", ".", "*", ".", "."}
+        };
+
+        String[][] expected = {
+                {"*", "2", "*", "1", "0"}
+        };
+        String[][] actual = generatePlayMap(simpleMineMap);
+
+        assertArrayEquals(expected, actual, "Can calculate mine in one row");
+    }
+
     private static boolean assertArrayEquals(String[][] expected, String[][] simpleMineMap, String message) {
         boolean result = true;
         if ((expected == null && simpleMineMap != null)
