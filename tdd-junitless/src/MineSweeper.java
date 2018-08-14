@@ -3,6 +3,7 @@ public class MineSweeper {
         testThatApplicationCanResolveASimpleMineMap();
         testThatApplicationCanResolveAMineMapWithTwoColumn();
         testThatApplicationCanResolveAMineMapWithThreeColumn();
+        testThatApplicationCanResolveAMineMapWithMultiRow();
     }
 
     public static String[][] generatePlayMap(String[][] mineMap) {
@@ -67,6 +68,21 @@ public class MineSweeper {
         String[][] actual = generatePlayMap(simpleMineMap);
 
         assertArrayEquals(expected, actual, "Can calculate mine in one row");
+    }
+
+    private static void testThatApplicationCanResolveAMineMapWithMultiRow() {
+        String[][] simpleMineMap = {
+                {"*", ".", "*", ".", "."},
+                {".", "*", ".", ".", "."}
+        };
+
+        String[][] expected = {
+                {"*", "3", "*", "1", "0"},
+                {"2", "*", "2", "1", "0"}
+        };
+        String[][] actual = generatePlayMap(simpleMineMap);
+
+        assertArrayEquals(expected, actual, "Can calculate mine in multi row");
     }
 
     private static boolean assertArrayEquals(String[][] expected, String[][] simpleMineMap, String message) {
