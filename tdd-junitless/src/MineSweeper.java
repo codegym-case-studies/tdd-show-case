@@ -9,7 +9,7 @@ public class MineSweeper {
     }
 
     public static String[][] generatePlayMap(String[][] mineMap) {
-        String[][] result = {{""}};
+        String[][] result = {{"*"}};
         return result;
     }
 
