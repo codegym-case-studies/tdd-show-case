@@ -1,5 +1,9 @@
 public class MineSweeper {
     public static void main(String[] args) {
+        testThatApplicationCanResolveASimpleMineMap();
+    }
+
+    private static void testThatApplicationCanResolveASimpleMineMap() {
         String[][] simpleMineMap = {{"*"}};
 
         String[][] expected = {{"*"}};
